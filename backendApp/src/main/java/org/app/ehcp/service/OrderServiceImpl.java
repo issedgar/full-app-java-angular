@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
             Order order = OrderCreateDTO.convertToOrder(orderCreateDTO);
             Order orderSave = orderRepository.save(order);
+            List<Article> articles = new ArrayList<>();
 
             List<OrderDetail> orderDetailList = orderCreateDTO.getOrderDetailList()
                     .stream()
@@ -66,9 +68,21 @@ public class OrderServiceImpl implements OrderService {
                             log.error("Article not exists whit id");
                             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Article not exists whit id");
                         }
-                        return OrderDetailCreateDTO.convertToOrderDetail(od, orderSave, articleOptional.get());
+
+                        Article article = articleOptional.get();
+                        article.setStock(article.getStock() - od.getCount());
+                        if(article.getStock() < 0) {
+                            log.error("Article not stock");
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Article not stock");
+                        }
+
+                        articles.add(article);
+                        return OrderDetailCreateDTO.convertToOrderDetail(od, orderSave, article);
                     }).toList();
 
+            if(articles.size() > 0) {
+                articleRepository.saveAll(articles);
+            }
             List<OrderDetail> orderDetailListSave =orderDetailRepository.saveAll(orderDetailList);
 
             OrderResponseDTO orderResponseDTO = OrderResponseDTO.convertToOrderResponseDTO(orderSave);
@@ -109,8 +123,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderResponseDTO>  findAll() {
-        List<Order> orderList = orderRepository.findAll();
+    public List<OrderResponseDTO>  findAllByStoreId(Long storeId) {
+        List<Order> orderList = orderRepository.findByStoreId(storeId);
 
         return orderList.stream().map( order -> {
             OrderResponseDTO orderResponseDTO = OrderResponseDTO.convertToOrderResponseDTO(order);

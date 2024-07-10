@@ -17,6 +17,9 @@ public class OrderCreateDTO {
     private Long clientId;
 
     @NotNull
+    private Long storeId;
+
+    @NotNull
     private List<OrderDetailCreateDTO> orderDetailList;
 
     public static Order convertToOrder(OrderCreateDTO orderCreateDTO) {

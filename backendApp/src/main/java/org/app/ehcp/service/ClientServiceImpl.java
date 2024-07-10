@@ -157,4 +157,11 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
         return new PageImpl<>(clientDTOList, pageable, clientPage.getTotalElements());
     }
+
+    @Override
+    public List<ClientResponseDTO> findAll() {
+        List<Client> clientList = clientRepository.findAll();
+        return clientList.stream()
+                .map(ClientResponseDTO::convertToClientResponseDTO).toList();
+    }
 }

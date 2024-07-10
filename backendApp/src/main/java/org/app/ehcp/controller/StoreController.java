@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/store")
@@ -31,6 +32,11 @@ public class StoreController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(service.findByPage(PageRequest.of(page, size, Sort.by("id").descending())));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Store>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping

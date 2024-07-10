@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -31,6 +32,11 @@ public class ClientController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(clientService.findByPage(PageRequest.of(page, size, Sort.by("id").descending())));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ClientResponseDTO>> getAll() {
+        return ResponseEntity.ok(clientService.findAll());
     }
 
     @PostMapping

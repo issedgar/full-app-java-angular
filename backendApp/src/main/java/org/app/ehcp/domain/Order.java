@@ -26,4 +26,6 @@ public class Order {
     @JsonIgnoreProperties(value={ "hibernateLazyInitializer", "handler" })
     private Client client;
 
+    private Long storeId;
+
 }

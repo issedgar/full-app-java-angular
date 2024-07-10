@@ -23,9 +23,9 @@ public class OrderController {
         return service.get(id);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<OrderResponseDTO>> getByPage() {
-        return ResponseEntity.ok(service.findAll());
+    @GetMapping("/all-by-store/{storeId}")
+    public ResponseEntity<List<OrderResponseDTO>> getByStore(@PathVariable Long storeId) {
+        return ResponseEntity.ok(service.findAllByStoreId(storeId));
     }
 
     @PostMapping

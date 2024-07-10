@@ -8,6 +8,8 @@ import org.app.ehcp.domain.dto.response.ClientResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ClientService {
     ClientResponseDTO get(Long clientId);
     ClientLoginResponseDTO login(ClientLoginDTO clientLoginDTO);
@@ -15,4 +17,5 @@ public interface ClientService {
     ClientResponseDTO update(Long clientId, ClientUpdateDTO clientUpdateDTO);
     void delete(Long clientId);
     Page<ClientResponseDTO> findByPage(Pageable pageable);
+    List<ClientResponseDTO> findAll();
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -131,5 +132,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(readOnly = true)
     public Page<ArticlePageProjection> findByPage(Pageable pageable) {
         return repository.findAllProjectedBy(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ArticlePageProjection> findByStore(Long storeId) {
+        return repository.findAllProjectedByStoreId(storeId);
     }
 }
