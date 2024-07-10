@@ -25,3 +25,6 @@ full-proyect 				(Carpeta principal)
 
 - username: admin
 - password: 123456
+
+# Access to app
+- http://localhost:4200/
