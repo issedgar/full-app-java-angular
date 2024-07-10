@@ -18,12 +18,12 @@ spring:
   datasource:
     initialization-mode: always
     driverClassName: org.postgresql.Driver
-#    url: ${SPRING_DATASOURCE_URL}
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
-    url: jdbc:postgresql://localhost:5433/backend-db
-    username: postgres
-    password: p1234
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+#    url: jdbc:postgresql://localhost:5433/backend-db
+#    username: postgres
+#    password: p1234
     data:
       - classpath:data.sql
 
